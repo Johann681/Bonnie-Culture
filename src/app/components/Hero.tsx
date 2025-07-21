@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="w-full min-h-[80vh] pt-24 px-6 md:px-16 pb-12 bg-white flex flex-col md:flex-row items-center justify-between gap-10">
+    <section className="w-full  min-h-[80vh] pt-24 px-6 md:px-16 pb-12 bg-white flex flex-col md:flex-row items-center justify-between gap-10">
       {/* Text Section */}
       <div className="max-w-xl space-y-5 text-center md:text-left">
         <motion.h1
