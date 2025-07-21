@@ -1,5 +1,5 @@
 "use client";
-import OrderSection from "../components/Ordersection";
+import OrderSection from "../components/OrderSection";
 // Update the import path if necessary, or create the missing file
 
 
