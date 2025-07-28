@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import Image from 'next/image'
+import { Menu, X } from 'lucide-react' // optional icon lib
 
 export default function Navbar() {
   const [userName, setUserName] = useState<string | null>(null)
+  const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export default function Navbar() {
         Bonnie Culture
       </Link>
 
+      {/* Desktop nav */}
       <ul className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-700">
         {navLinks.map((link) => (
           <li key={link.href}>
@@ -86,8 +89,56 @@ export default function Navbar() {
         </li>
       </ul>
 
-      {/* Mobile menu toggle button */}
-      {/* You can also bring back mobile nav with framer-motion if needed */}
+      {/* Mobile menu button */}
+      <button onClick={() => setIsOpen(!isOpen)} className="md:hidden z-50">
+        {isOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Mobile nav panel */}
+      {isOpen && (
+        <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow p-4 flex flex-col gap-4 text-gray-700 text-sm font-medium z-40">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className={`hover:text-black ${
+                pathname === link.href ? 'text-black underline' : ''
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+
+          <Link href="/cart" className="text-xl">🛒</Link>
+
+          {userName ? (
+            <div className="flex items-center gap-2">
+              <Image
+                src="/peeps.jpg"
+                alt="User"
+                width={30}
+                height={30}
+                className="rounded-full"
+              />
+              <span>{userName}</span>
+              <button
+                onClick={handleLogout}
+                className="ml-2 px-2 py-1 text-xs bg-red-500 text-white rounded hover:bg-red-600"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="px-3 py-1 border rounded hover:bg-gray-100 transition"
+            >
+              Login
+            </Link>
+          )}
+        </div>
+      )}
     </nav>
   )
 }
